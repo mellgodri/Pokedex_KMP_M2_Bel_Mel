@@ -1,49 +1,80 @@
-# Pokédex Multiplatform - Trabalho M2
+# Pokédex M2
 
-Projeto atualizado para a M2 da disciplina **Programação para Dispositivos Móveis II**.
+## Participantes
 
-## Principais alterações feitas
+- Nome completo: Maria Isabel Henke
 
-- Nova interface baseada nos prints enviados:
-  - onboarding com duas telas;
-  - tela principal da Pokédex com busca, filtro por tipo e grid em 2 colunas;
-  - bottom sheet para seleção de tipos;
-  - tela de detalhes com cor baseada no tipo do Pokémon;
-  - tela de favoritos com cards e local de captura.
+- Nome completo: Mel Izis Godri
 
-- Alterações funcionais:
-  - consumo da **PokeAPI** com Ktor;
-  - sincronização inicial dos Pokémons para cache local;
-  - paginação com `LIMIT` e `OFFSET` no banco local;
-  - busca por nome e filtro por tipo consultando o cache local;
-  - tela de detalhes carregando dados em tempo real pela PokeAPI;
-  - favoritos persistidos em SQLite no Android;
-  - campo obrigatório **Onde foi capturado?** ao salvar favorito;
-  - ViewModels com `StateFlow` e estados explícitos de carregamento, sucesso e erro.
+---
 
-## Como executar no Android Studio
+## Sobre o Projeto
 
-1. Abra a pasta do projeto no Android Studio.
-2. Aguarde o Gradle sincronizar.
-3. Selecione a configuração `composeApp`.
-4. Execute em um emulador ou dispositivo Android.
+Este projeto é uma aplicação Pokédex desenvolvida em Kotlin Multiplatform com Compose Multiplatform.
 
-Também é possível executar pelo terminal:
+A proposta da M2 foi evoluir o projeto inicial da M1, substituindo dados simulados por uma estrutura mais próxima de uma aplicação real, utilizando consumo de API, persistência local, arquitetura com ViewModel e gerenciamento reativo de estado.
 
-```bash
-./gradlew :composeApp:assembleDebug
-```
+O aplicativo permite visualizar uma lista de Pokémons, consultar detalhes, filtrar por tipo, pesquisar por nome e salvar Pokémons favoritos/localizados pelo usuário.
 
-## Observações importantes
+---
 
-- Na primeira abertura, o app tenta buscar os dados na PokeAPI e salvar o cache local.
-- Se estiver sem internet na primeira execução, o app carrega uma base mínima local para não ficar vazio.
-- No Android, a persistência local foi feita usando SQLite nativo via `SQLiteOpenHelper`, mantendo a lógica de banco relacional exigida pela atividade.
-- Para iOS, foi mantida uma implementação em memória apenas para permitir compilação do alvo multiplatform. O foco da entrega está no Android Studio.
+## Funcionalidades Implementadas
 
+- Tela inicial de onboarding com imagens personalizadas.
+- Tela principal da Pokédex.
+- Listagem de Pokémons em cards.
+- Busca de Pokémon por nome.
+- Filtro por tipo.
+- Paginação na listagem.
+- Tela de detalhes do Pokémon.
+- Consumo de dados da PokeAPI.
+- Persistência local dos Pokémons salvos.
+- Campo obrigatório para informar onde o Pokémon foi capturado.
+- Tela de favoritos/Pokédex salva.
+- Limite máximo de 6 Pokémons adicionados.
+- Tela/mensagem de erro ao tentar adicionar mais de 6 Pokémons.
+- Gerenciamento de estado com ViewModel e StateFlow.
+- Tratamento de estados de Loading, Success e Error.
 
-## Alteracao adicional
+---
 
-- A lista de Pokemons salvos/favoritos agora respeita o limite maximo de 6 Pokemons.
-- Ao tentar salvar o setimo Pokemon, o aplicativo exibe uma tela de erro informando que o limite foi atingido.
-- Para adicionar outro Pokemon, o usuario precisa remover um dos Pokemons ja salvos.
+## Regra de Negócio
+
+O usuário pode adicionar no máximo 6 Pokémons à sua Pokédex/favoritos.
+
+Caso tente adicionar um sétimo Pokémon, o sistema bloqueia a ação e apresenta uma mensagem de erro informando que o limite máximo foi atingido.
+
+Além disso, ao adicionar um Pokémon, é obrigatório informar o local onde ele foi capturado.
+
+---
+
+## Tecnologias Utilizadas
+
+- Kotlin Multiplatform
+- Compose Multiplatform
+- Material 3
+- Ktor Client
+- PokeAPI
+- ViewModel
+- StateFlow
+- Persistência local
+- Android Studio
+
+---
+
+## Arquitetura do Projeto
+
+O projeto foi organizado separando responsabilidades entre interface, estado, dados e regras de negócio.
+
+Estrutura principal:
+
+```text
+composeApp/
+ └── src/
+     └── commonMain/
+         └── kotlin/
+             └── com/example/pokedex_kmp/
+                 ├── data/
+                 ├── ui/
+                 ├── viewmodel/
+                 └── navigation/
